@@ -1,8 +1,2 @@
 plugins:
   - jekyll-redirect-from
-
-webrick:
-  headers:
-    My-Header: My-Value
-    Content-Type: application/octet-stream
-

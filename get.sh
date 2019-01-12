@@ -1,3 +1,8 @@
+---
+redirect_from: "/"
+---
+#!/bin/bash
+
 version=$(curl -sI https://github.com/openfaas/faas-cli/releases/latest | grep Location | awk -F"/" '{ printf "%s", $NF }' | tr -d '\r')
 if [ ! $version ]; then
     echo "Failed while attempting to install faas-cli. Please manually install:"

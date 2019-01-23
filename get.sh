@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Copyright OpenFaaS Author(s) 2019
 version=$(curl -sI https://github.com/openfaas/faas-cli/releases/latest | grep Location | awk -F"/" '{ printf "%s", $NF }' | tr -d '\r')
 if [ ! $version ]; then
     echo "Failed while attempting to install faas-cli. Please manually install:"

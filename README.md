@@ -1,62 +1,27 @@
 # cli.openfaas.com
-The installation script for the OpenFaaS CLI served by Netlify
+The installation script for the OpenFaaS CLI is served by Netlify. 
 
-Response Content-Type is application/x-shellscript. You should get a response header like this:
 
-```python
-import requests
-r = requests.get('https://cli.openfaas.com')
-r.headers
-```
-
-Header of the response:
-```json
-{
-	"Accept-Ranges": "bytes",
-	"Cache-Control": "public, max-age=0, must-revalidate",
-	"Content-Type": "application/x-shellscript",
-	"Date": "Sun, 13 Jan 2019 10:07:00 GMT",
-	"Etag": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-ssl-df",
-	"Strict-Transport-Security": "max-age=31536000",
-	"X-Nf-Srv-Version": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-	"Content-Encoding": "gzip",
-	"Content-Length": "1159",
-	"Age": "124108",
-	"Connection": "keep-alive",
-	"Server": "Netlify",
-	"Vary": "Accept-Encoding",
-	"X-NF-Request-ID": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx-xxxxxxx"
-}
-```
-
-What happened if you try to receive the faas-cli script installion script via http? The connection will be upgraded to https and redirects you to https://cli.openfaas.com/get.sh
-
-You can force to ignore redirection by following command:
-```python
-r = requests.get('http://cli.openfaas.com', allow_redirects=False)
-```
-
-You will get the redirected url via:
-```python
-r.next.url
-```
 
 The content you will received Is maintained in the following git repository: https://github.com/openfaas/cli.openfaas.com
 
-Please keep in mind, all connections are redirected from "/" to "/get.sh" by a 301 http code.
 
 
 ##### faas-cli installation process is described [here](https://docs.openfaas.com/cli/install/).
 
 The following wil describe how it works in detail.
 
-```python
+```bash
 curl -sSL https://cli.openfaas.com | sh
 ```
 
 First -s stands for silent and -S to show errors, -L ensures that the redirection by the 301 http code is accepted.
 The pipe will pass the received content (get.sh script) to your shell and it will be executed.
 [Here](https://curl.haxx.se/docs/manpage.html) you will find more about curl. 
+
+>What happened if you try to receive the faas-cli script installion script via http? The connection will be upgraded to https and redirects you to https://cli.openfaas.com/get.sh \
+Please keep in mind, all connections are redirected from "/" to "/get.sh" by a 301 http code.
+
 
 ##### The get.sh script in detail:
 

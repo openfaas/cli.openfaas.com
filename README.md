@@ -1,13 +1,9 @@
 # cli.openfaas.com
-The installation script for the OpenFaaS CLI is served by Netlify. 
+Installation script for the OpenFaaS CLI is served by Netlify. The content you will received Is maintained in the following git repository: https://github.com/openfaas/cli.openfaas.com
 
 
 
-The content you will received Is maintained in the following git repository: https://github.com/openfaas/cli.openfaas.com
-
-
-
-##### faas-cli installation process is described [here](https://docs.openfaas.com/cli/install/).
+#### faas-cli installation process is described [here](https://docs.openfaas.com/cli/install/).
 
 The following wil describe how it works in detail.
 
@@ -23,7 +19,7 @@ The pipe will pass the received content (get.sh script) to your shell and it wil
 Please keep in mind, all connections are redirected from "/" to "/get.sh" by a 301 http code.
 
 
-##### The get.sh script in detail:
+#### The get.sh script in detail:
 
 *1-part of the script checks faas-cli version:*
 - Get latest version number from OpenFaaS repository.
@@ -40,7 +36,7 @@ Please keep in mind, all connections are redirected from "/" to "/get.sh" by a 3
 - Hash will be checked (checkHash function, it will use sha256)
 - Downloaded file will be marked as executable (chmod +x $targetFile)
 
-##### Please check if you are running the installation as unprivileged user:
+#### Please check if you are running the installation as unprivileged user:
 ```bash
 sudo cp faas-cli$suffix /usr/local/bin/faas-cli
 sudo ln -sf /usr/local/bin/faas-cli /usr/local/bin/faas

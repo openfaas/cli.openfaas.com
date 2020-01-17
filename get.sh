@@ -13,6 +13,21 @@ export SUCCESS_CMD="$REPO version"
 export BINLOCATION="/usr/local/bin"
 
 ###############################
+# Fixup PATH for some distros #
+###############################
+
+if ! echo $PATH | grep "/usr/local/bin" > /dev/null; then
+  export PATH=/usr/local/bin:$PATH
+  if test -d /etc/profile.d; then
+    if ! test -r /etc/profile.d/local-bin-path.sh; then
+      echo "Adding /etc/profile.d/local-bin-path.sh fixup."
+      echo 'if ! echo $PATH | grep "/usr/local/bin" > /dev/null; then export PATH=/usr/local/bin:$PATH; fi' \
+        | sudo tee /etc/profile.d/local-bin-path.sh > /dev/null
+    fi
+  fi
+fi
+
+###############################
 # Content common across repos #
 ###############################
 
@@ -52,12 +67,12 @@ checkHash(){
     targetFileDir=${targetFile%/*}
 
     (cd $targetFileDir && curl -sSL $url.sha256|$sha_cmd -c >/dev/null)
-   
+
         if [ "$?" != "0" ]; then
             rm $targetFile
             echo "Binary checksum didn't match. Exiting"
             exit 1
-        fi   
+        fi
     fi
 }
 
@@ -93,7 +108,7 @@ getPackage() {
     esac
 
     targetFile="/tmp/$REPO$suffix"
-    
+
     if [ "$userid" != "0" ]; then
         targetFile="$(pwd)/$REPO$suffix"
     fi
@@ -116,7 +131,7 @@ getPackage() {
     chmod +x $targetFile
 
     echo "Download complete."
-       
+
     if [ ! -w "$BINLOCATION" ]; then
 
             echo
@@ -127,11 +142,11 @@ getPackage() {
             echo "============================================================"
             echo
             echo "  sudo cp $REPO$suffix $BINLOCATION/$REPO"
-            
+
             if [ -n "$ALIAS_NAME" ]; then
                 echo "  sudo ln -sf $BINLOCATION/$REPO $BINLOCATION/$ALIAS_NAME"
             fi
-            
+
             echo
 
         else
@@ -145,7 +160,7 @@ getPackage() {
             echo "================================================================"
             echo "  $BINLOCATION/$REPO already exists and is not writeable"
             echo "  by the current user.  Please adjust the binary ownership"
-            echo "  or run sh/bash with sudo." 
+            echo "  or run sh/bash with sudo."
             echo "================================================================"
             echo
             exit 1
@@ -153,7 +168,7 @@ getPackage() {
             fi
 
             mv $targetFile $BINLOCATION/$REPO
-        
+
             if [ "$?" = "0" ]; then
                 echo "New version of $REPO installed to $BINLOCATION"
             fi

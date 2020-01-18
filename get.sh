@@ -27,6 +27,11 @@ if ! echo $PATH | grep "/usr/local/bin" > /dev/null; then
   fi
 fi
 
+if ! $(grep "Defaults.*secure_path" /etc/sudoers | grep -q "/usr/local/bin"); then
+  echo "Fixing '/etc/sudoers' to include '/usr/local/bin' in 'secure_path'."
+  sudo sed -i.bak 's|^\(Defaults.*secure_path = \)/|\1/usr/local/bin:/|' /etc/sudoers
+fi
+
 ###############################
 # Content common across repos #
 ###############################

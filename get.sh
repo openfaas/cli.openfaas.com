@@ -16,7 +16,17 @@ export BINLOCATION="/usr/local/bin"
 # Content common across repos #
 ###############################
 
-version=$(curl -sI https://github.com/$OWNER/$REPO/releases/latest | grep Location | awk -F"/" '{ printf "%s", $NF }' | tr -d '\r')
+version=""
+for i in {1..11} ; do
+    echo "Finding latest version from GitHub $i/10"
+    version=$(curl -sI https://github.com/$OWNER/$REPO/releases/latest | grep -i location | awk -F"/" '{ printf "%s", $NF }' | tr -d '\r')
+    echo $version
+    if [ $version ]; then
+        break
+    fi
+    sleep 1
+done
+
 if [ ! $version ]; then
     echo "Failed while attempting to install $REPO. Please manually install:"
     echo ""

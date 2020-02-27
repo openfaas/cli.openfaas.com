@@ -88,7 +88,6 @@ getPackage() {
     ;;
     "Linux")
         arch=$(uname -m)
-        echo $arch
         case $arch in
         "aarch64")
         suffix="-arm64"

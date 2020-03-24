@@ -18,17 +18,9 @@ export BINLOCATION="/usr/local/bin"
 
 version=""
 
-# Bash < 3.0 doesn't support in {0..10}
-for i in 1 2 3 4 5 6 7 8 9 10 ; do
-    echo "Finding latest version from GitHub $i/10"
-    version=$(curl -sI https://github.com/$OWNER/$REPO/releases/latest | grep -i location | awk -F"/" '{ printf "%s", $NF }' | tr -d '\r')
-    echo $version
-    
-    if [ $version ]; then
-        break
-    fi
-    sleep 1
-done
+echo "Finding latest version from GitHub"
+version=$(curl -sI https://github.com/$OWNER/$REPO/releases/latest | grep -i location | awk -F"/" '{ printf "%s", $NF }' | tr -d '\r')
+echo $version
 
 if [ ! $version ]; then
     echo "Failed while attempting to install $REPO. Please manually install:"

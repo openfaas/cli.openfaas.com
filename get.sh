@@ -56,10 +56,10 @@ checkHash(){
 
     targetFileDir=${targetFile%/*}
 
-    (cd $targetFileDir && curl -sSL $url.sha256|$sha_cmd -c >/dev/null)
+    (cd "$targetFileDir" && curl -sSL $url.sha256|$sha_cmd -c >/dev/null)
    
         if [ "$?" != "0" ]; then
-            rm $targetFile
+            rm "$targetFile"
             echo "Binary checksum didn't match. Exiting"
             exit 1
         fi   
@@ -102,14 +102,14 @@ getPackage() {
         targetFile="$(pwd)/$REPO$suffix"
     fi
 
-    if [ -e $targetFile ]; then
-        rm $targetFile
+    if [ -e "$targetFile" ]; then
+        rm "$targetFile"
     fi
 
     url=https://github.com/$OWNER/$REPO/releases/download/$version/$REPO$suffix
     echo "Downloading package $url as $targetFile"
 
-    curl -sSL $url --output $targetFile
+    curl -sSL $url --output "$targetFile"
 
     if [ "$?" = "0" ]; then
 
@@ -117,7 +117,7 @@ getPackage() {
             checkHash
         fi
 
-    chmod +x $targetFile
+    chmod +x "$targetFile"
 
     echo "Download complete."
        
@@ -156,14 +156,14 @@ getPackage() {
 
             fi
 
-            mv $targetFile $BINLOCATION/$REPO
+            mv "$targetFile" $BINLOCATION/$REPO
         
             if [ "$?" = "0" ]; then
                 echo "New version of $REPO installed to $BINLOCATION"
             fi
 
-            if [ -e $targetFile ]; then
-                rm $targetFile
+            if [ -e "$targetFile" ]; then
+                rm "$targetFile"
             fi
 
             if [ -n "$ALIAS_NAME" ]; then

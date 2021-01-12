@@ -19,7 +19,7 @@ export BINLOCATION="/usr/local/bin"
 version=""
 
 echo "Finding latest version from GitHub"
-version=$(curl -sI https://github.com/$OWNER/$REPO/releases/latest | grep -i location | awk -F"/" '{ printf "%s", $NF }' | tr -d '\r')
+version=$(curl -sI https://github.com/$OWNER/$REPO/releases/latest | grep -i location | grep -v Security | awk -F"/" '{ printf "%s", $NF }' | tr -d '\r')
 echo $version
 
 if [ ! $version ]; then

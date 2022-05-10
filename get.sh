@@ -9,8 +9,8 @@ export VERIFY_CHECKSUM=1
 export ALIAS_NAME="faas"
 export OWNER="openfaas"
 export REPO="faas-cli"
-export SUCCESS_CMD="$REPO version"
 export BINLOCATION="/usr/local/bin"
+export SUCCESS_CMD="$BINLOCATION/$REPO version"
 
 ###############################
 # Content common across repos #
@@ -30,7 +30,7 @@ if [ ! $version ]; then
     echo "3. chmod +x ./$REPO"
     echo "4. mv ./$REPO $BINLOCATION"
     if [ -n "$ALIAS_NAME" ]; then
-        echo "5. ln -sf $BINLOCATION/$REPO /usr/local/bin/$ALIAS_NAME"
+        echo "5. ln -sf $BINLOCATION/$REPO $BINLOCATION/$ALIAS_NAME"
     fi
     exit 1
 fi

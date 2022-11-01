@@ -69,11 +69,16 @@ checkHash(){
 getPackage() {
     uname=$(uname)
     userid=$(id -u)
-
+    arch=$(uname -m)
     suffix=""
     case $uname in
     "Darwin")
-    suffix="-darwin"
+        suffix="-darwin"
+        case $arch in
+        "aarch64")
+        suffix="-darwin-arm64"
+        ;;
+        esac
     ;;
     "MINGW"*)
     suffix=".exe"
@@ -82,7 +87,6 @@ getPackage() {
 
     ;;
     "Linux")
-        arch=$(uname -m)
         case $arch in
         "aarch64")
         suffix="-arm64"
